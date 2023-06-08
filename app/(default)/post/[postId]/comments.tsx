@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { CommentActions } from "./comment-actions";
+import Link from "next/link";
 
 type Props = {
   postId: string;
@@ -91,7 +92,11 @@ const CommentTree = ({
           id={comment.id}
           className={depth > 0 ? "border-l-2 border-gray-200 pl-4" : ""}
         >
-          <h3 className="text-lg font-semibold">{comment.authorName}</h3>
+          <Link href={"/user/" + comment.authorId}>
+            <h3 className="text-lg font-semibold hover:underline">
+              {comment.authorName}
+            </h3>
+          </Link>
           <div className="flex flex-col gap-2 mb-2">
             {comment.content.split("\n").map((paragraph, i) => (
               <p key={i}>{paragraph}</p>

@@ -14,16 +14,6 @@ async function getNewestPosts() {
           id: true,
         },
       },
-      comments: {
-        select: {
-          id: true,
-        },
-      },
-      upvotes: {
-        select: {
-          userId: true,
-        },
-      },
       _count: {
         select: {
           comments: true,
@@ -42,7 +32,7 @@ export default async function FeedPage() {
 
   return (
     <main className="p-5 max-w-screen-lg w-full mx-auto">
-      <h1 className="text-5xl font-semibold mb-4">Newest posts</h1>
+      <h1 className="text-5xl font-semibold mb-4">Nylige innlegg</h1>
 
       {posts.length < 1 ? (
         <p>No posts yet</p>
@@ -61,7 +51,7 @@ export default async function FeedPage() {
                   <p>{post._count.upvotes} upvotes</p>
                   <Link href={"/post/" + post.id + "#comments"} scroll={false}>
                     <p className="hover:underline">
-                      {post._count.comments} comments
+                      {post._count.comments} kommentarer
                     </p>
                   </Link>
                   <p>{formatDate(post.createdAt)}</p>

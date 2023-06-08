@@ -7,55 +7,14 @@ import { CommentSection } from "./comments";
 
 type Props = {
   params: {
-    id: string;
+    postId: string;
   };
 };
 
-type Comment = {
-  id: string;
-  content: string;
-  authorId: string;
-  authorName: string;
-  postId: string;
-  parentId: string | null;
-  createdAt: Date;
-  depth: number;
-  replies: Comment[];
-};
-
-async function getPostById(id: string) {
-  return await prisma.post.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      title: true,
-      content: true,
-      createdAt: true,
-      upvotes: {
-        select: {
-          userId: true,
-        },
-      },
-      comments: {
-        select: {
-          id: true,
-        },
-      },
-      _count: {
-        select: {
-          upvotes: true,
-          comments: true,
-        },
-      },
-    },
-  });
-}
-
 export default async function PostPage({ params }: Props) {
-  const { id } = params;
+  const { postId } = params;
 
-  const post = await getPostById(id);
+  const post = await getPostById(postId);
 
   if (!post) {
     return notFound();
@@ -86,7 +45,7 @@ export default async function PostPage({ params }: Props) {
 
       <hr className="my-6" />
 
-      <CommentForm postId={id} />
+      <CommentForm postId={postId} />
 
       <hr className="my-6" />
 
@@ -96,8 +55,27 @@ export default async function PostPage({ params }: Props) {
 
       <Suspense fallback={<div>Loading...</div>}>
         {/* @ts-expect-error Server Component */}
-        <CommentSection postId={id} />
+        <CommentSection postId={postId} />
       </Suspense>
     </main>
   );
+}
+
+async function getPostById(id: string) {
+  return await prisma.post.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      title: true,
+      content: true,
+      createdAt: true,
+      _count: {
+        select: {
+          upvotes: true,
+          comments: true,
+        },
+      },
+    },
+  });
 }
