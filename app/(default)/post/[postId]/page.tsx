@@ -6,6 +6,8 @@ import { Suspense } from "react";
 import { CommentSection } from "./comments";
 import { PostActions } from "./post-actions";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   params: {
     postId: string;
