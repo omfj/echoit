@@ -4,6 +4,7 @@ import Link from "next/link";
 
 async function getNewestPosts() {
   return await prisma.post.findMany({
+    take: 10,
     orderBy: {
       createdAt: "desc",
     },

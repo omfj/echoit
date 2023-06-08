@@ -2,6 +2,9 @@ import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { UserActions } from "./user-actions";
 import Image from "next/image";
+import { getSession } from "@/lib/session";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type Props = {
   params: {
@@ -31,6 +34,10 @@ export default async function UserPage({ params }: Props) {
     return notFound();
   }
 
+  const session = await getSession();
+
+  const isUser = session?.user.id === user.id;
+
   return (
     <main className="p-5 max-w-screen-lg w-full mx-auto">
       <div className="flex flex-col md:flex-row mb-5 gap-6">
@@ -39,12 +46,12 @@ export default async function UserPage({ params }: Props) {
             src={user.image}
             alt="Profile picture"
             className="shadow-xl rounded-full"
-            width={200}
-            height={200}
+            width={150}
+            height={150}
           />
         )}
         <div>
-          <h1 className="text-5xl font-semibold mb-4">{user.name}</h1>
+          <h1 className="text-4xl font-semibold mb-4">{user.name}</h1>
 
           <div className="flex items-center mb-4 divide-x [&>*]:px-2 [&>*:first-child]:pl-0 [&>*:last-child]:pr-0 ">
             <div className="flex items-center gap-2">
@@ -63,7 +70,12 @@ export default async function UserPage({ params }: Props) {
               </p>
             </div>
           </div>
-          <UserActions userId={user.id} />
+          {!isUser && <UserActions userId={user.id} />}
+          {isUser && (
+            <Button asChild>
+              <Link href="/settings">Innstillinger</Link>
+            </Button>
+          )}
         </div>
       </div>
 

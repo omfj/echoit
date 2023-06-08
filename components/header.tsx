@@ -26,13 +26,18 @@ export async function Header() {
 
         <nav>
           <ul className="flex items-center gap-2">
-            <NavLinkItem href="/">Home</NavLinkItem>
+            <NavLinkItem href="/">Hjem</NavLinkItem>
             <NavLinkItem href="/feed">Feed</NavLinkItem>
-            {session && <NavLinkItem href="/create">Create</NavLinkItem>}
+            {session && <NavLinkItem href="/create">Opprett</NavLinkItem>}
+            {session && (
+              <NavLinkItem href={`/user/${session.user.id}`}>
+                Profil
+              </NavLinkItem>
+            )}
             {session ? (
-              <NavLinkCTA href="/api/auth/signout">Logout</NavLinkCTA>
+              <NavLinkCTA href="/api/auth/signout">Logg ut</NavLinkCTA>
             ) : (
-              <NavLinkCTA href="/login">Login</NavLinkCTA>
+              <NavLinkCTA href="/login">Logg inn</NavLinkCTA>
             )}
           </ul>
         </nav>
