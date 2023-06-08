@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import axios from "axios";
-import { AlertTriangle, LoaderIcon, Reply, Share } from "lucide-react";
+import { AlertTriangle, LoaderIcon, MoveUp, Reply, Share } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { useRouter } from "next/navigation";
 
@@ -60,6 +60,23 @@ export function CommentActions({ postId, commentId }: Props) {
     alert(`Somehting went wrong! Status: ${status}`);
   });
 
+  const handleUpvote = async () => {
+    const { status } = await axios.patch(
+      `/api/post/${postId}/comment/${commentId}/upvote`,
+      undefined,
+      {
+        validateStatus: () => true,
+      }
+    );
+
+    if (status === 201) {
+      router.refresh();
+      return;
+    }
+
+    alert(`Something went wrong. Status: ${status}`);
+  };
+
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(
       window.location.origin + "/post/" + postId + "/#" + commentId
@@ -74,6 +91,12 @@ export function CommentActions({ postId, commentId }: Props) {
   return (
     <>
       <div className="flex items-center divide-x [&>*]:px-2 [&>*:first-child]:pl-0 [&>*:last-child]:pr-0 ">
+        <button
+          className="text-sm flex items-center gap-2 text-muted-foreground hover:underline mb-2"
+          onClick={handleUpvote}
+        >
+          <MoveUp className="h-4 w-4" />
+        </button>
         <button
           className="text-sm text-muted-foreground flex items-center gap-1 hover:underline mb-2"
           onClick={() => setIsReplying((prev) => !prev)}

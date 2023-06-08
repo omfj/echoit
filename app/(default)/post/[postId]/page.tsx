@@ -4,6 +4,7 @@ import { CommentForm } from "./comment-form";
 import { formatDate } from "@/lib/date";
 import { Suspense } from "react";
 import { CommentSection } from "./comments";
+import { PostActions } from "./post-actions";
 
 type Props = {
   params: {
@@ -31,14 +32,15 @@ export default async function PostPage({ params }: Props) {
       </div>
 
       <div className="flex items-center divide-x [&>*]:px-2 [&>*:first-child]:pl-0 [&>*:last-child]:pr-0 ">
+        <PostActions postId={postId} />
         <div className="flex items-center gap-2">
           <p className="text-sm text-muted-foreground">
-            {formatDate(post.createdAt)}
+            {post._count.upvotes} upvotes
           </p>
         </div>
         <div className="flex items-center gap-2">
           <p className="text-sm text-muted-foreground">
-            {post._count.upvotes} upvotes
+            {formatDate(post.createdAt)}
           </p>
         </div>
       </div>

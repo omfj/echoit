@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { UserActions } from "./user-actions";
-import { Key, Mail, PersonStandingIcon } from "lucide-react";
 import Image from "next/image";
 
 type Props = {
