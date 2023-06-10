@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint && manypkg check",
     "lint:fix": "next lint --fix && manypkg fix",
+    "clean": "rm -rf node_modules .next",
     "db:up": "docker-compose up -d",
     "db:down": "docker-compose down",
     "db:generate": "prisma generate",

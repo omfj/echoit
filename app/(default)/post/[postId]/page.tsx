@@ -58,7 +58,6 @@ export default async function PostPage({ params }: Props) {
       </h2>
 
       <Suspense fallback={<div>Loading...</div>}>
-        {/* @ts-expect-error Server Component */}
         <CommentSection postId={postId} />
       </Suspense>
     </main>

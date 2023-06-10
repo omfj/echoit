@@ -8,7 +8,6 @@ export default function DefaultLayout({
 }) {
   return (
     <>
-      {/* @ts-expect-error Server Component */}
       <Header />
       {children}
       <div className="flex-1" />
