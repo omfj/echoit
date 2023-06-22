@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
-    "@manypkg/cli": "0.20.0",
+    "@manypkg/cli": "0.21.0",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.15.0",
     "@radix-ui/react-label": "^2.0.2",
